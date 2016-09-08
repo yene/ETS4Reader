@@ -28,7 +28,7 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
-    
+
     <!-- upload informations for deploying the jar -->
     <distributionManagement>
         <repository>
@@ -40,9 +40,9 @@
             <id>root1-snapshots</id>
             <name>internal snapshots</name>
             <url>ftp://maven.root1.de/snapshots/</url>
-        </snapshotRepository>      
-    </distributionManagement>  
-    
+        </snapshotRepository>
+    </distributionManagement>
+
     <build>
         <!-- Required for ftp repo -->
         <extensions>
@@ -53,6 +53,27 @@
             </extension>
         </extensions>
         <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-shade-plugin</artifactId>
+              <version>2.2</version>
+              <executions>
+                <execution>
+                  <phase>package</phase>
+                  <goals>
+                    <goal>shade</goal>
+                  </goals>
+                  <configuration>
+                    <transformers>
+                      <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                        <mainClass>de.root1.ets4reader.ETS4Reader</mainClass>
+                      </transformer>
+                    </transformers>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -88,5 +109,5 @@
             </plugin>
         </plugins>
     </build>
-    
+
 </project>
